@@ -2,19 +2,46 @@ class DoublyLinkedList<T> {
     private Element<T> head;
 
     void push(T value) {
-        throw new UnsupportedOperationException("Please implement the DoublyLinkedList.push() method.");
+        if (head == null) {
+            head = new Element<>(value, null, null);
+            return;
+        }
+        var node = head;
+        while (node.next != null) {
+            node = node.next;
+        }
+        node.next = new Element<>(value, node, null);
     }
 
     T pop() {
-        throw new UnsupportedOperationException("Please implement the DoublyLinkedList.pop() method.");
+        if (head == null) {
+            return null;
+        }
+        var node = head;
+        while (node.next != null) {
+            node = node.next;
+        }
+        var result = node.value;
+        if (node.prev != null)
+            node.prev.next = null;
+        return result;
     }
 
     void unshift(T value) {
-        throw new UnsupportedOperationException("Please implement the DoublyLinkedList.unshift() method.");
+        var newNode = new Element<>(value, null, head);
+        if (head != null) {
+            head.prev = newNode;
+        }
+        head = newNode;
     }
 
     T shift() {
-        throw new UnsupportedOperationException("Please implement the DoublyLinkedList.shift() method.");
+        if (head == null) {
+            return null;
+        }
+        var result = head.value;
+        head = head.next;
+        return result;
     }
 
     private static final class Element<T> {
@@ -23,7 +50,9 @@ class DoublyLinkedList<T> {
         private Element<T> next;
 
         Element(T value, Element<T> prev, Element<T> next) {
-            throw new UnsupportedOperationException("Please implement the Element constructor.");
+            this.value = value;
+            this.next = next;
+            this.prev = prev;
         }
     }
 }
